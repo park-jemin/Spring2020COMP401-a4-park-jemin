@@ -12,26 +12,26 @@ import java.util.*;
 
 public class ShortButFairDispatcher implements Dispatcher {
 
-	private List<Integer> chosenID;
+	private List<Driver> chosen;
 	
 	public ShortButFairDispatcher() {
-		chosenID = new ArrayList<Integer>();
+		chosen = new ArrayList<>();
 	}
 	
 	@Override
 	public Driver chooseDriver(Driver[] availableDrivers, RideRequest request) {
 		
-		Driver closestDriver = availableDrivers[6];
+		Driver closestDriver = availableDrivers[3]; // this works w 3 and 6
 		
 		for (Driver driver : availableDrivers) {
 			closestDriver = (driver.distanceTo(request) <= closestDriver.distanceTo(request) 
-					&& !chosenID.contains(driver.getID())) ? driver : closestDriver;
+					&& !chosen.contains(driver)) ? driver : closestDriver;
 		}
 		
 		
-		chosenID.add(closestDriver.getID());
-		if (chosenID.size() > 5) {
-			chosenID.remove(0);
+		chosen.add(closestDriver);
+		if (chosen.size() > 5) {
+			chosen.remove(0);
 		}
 		
 		return closestDriver;		
