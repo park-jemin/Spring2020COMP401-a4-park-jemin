@@ -35,37 +35,44 @@ public class Simulation {
 	private static final int DEFAULT_HOTSPOT_COUNT = 10;
 	private static final int DEFAULT_DRIVER_COUNT = 10;
 
-	private int _gridWidth;
-	private int _gridHeight;
+	private int _gridWidth, _gridHeight;
 	private Position[] _hotSpots;
 	private List<CompletedRide> _rideLog;
 	private Random _rng;
 	private Dispatcher _dispatcher;
 	
-	public Simulation(long seed, int request_count, Dispatcher dispatcher) {
-		_gridWidth = DEFAULT_GRID_WIDTH;
-		_gridHeight = DEFAULT_GRID_HEIGHT;
-		_hotSpots = new Position[DEFAULT_HOTSPOT_COUNT];
+	public Simulation(long seed, int request_count, Dispatcher dispatcher,
+            int grid_width, int grid_height, int hotspot_count, int driver_count) {
+		
+		_gridWidth = grid_width;
+		_gridHeight = grid_height;
+		_hotSpots = new Position[hotspot_count];
 		_rideLog = new ArrayList<CompletedRide>();
 		_rng = new Random(seed);
 		_dispatcher = dispatcher;
-		
+
 		for (int i=0; i<_hotSpots.length; i++) {
 			_hotSpots[i] = createRandomPosition();
 		}
 		
-		Driver[] drivers = new Driver[DEFAULT_DRIVER_COUNT];
+		Driver[] drivers = new Driver[driver_count];
 		
 		for (int i=0; i<drivers.length; i++) {
 			drivers[i] = createRandomDriver(i);
 		}
 
-		
 		for (int r=0; r<request_count; r++) {
 			RideRequest request = createRandomRequest();
 			CompletedRide ride = request.complete(_dispatcher.chooseDriver(drivers, request));
 			_rideLog.add(ride);
 		}
+		
+		
+		
+	}
+	
+	public Simulation(long seed, int request_count, Dispatcher dispatcher) {
+		this(seed, request_count, dispatcher, DEFAULT_GRID_WIDTH, DEFAULT_GRID_HEIGHT, DEFAULT_HOTSPOT_COUNT, DEFAULT_DRIVER_COUNT);	
 	}
 	
 	public CompletedRide[] getRideLog() {

@@ -1,6 +1,5 @@
 package a4;
 
-
 /* 
  * Position
  * Represents an integer (x,y) position on a grid.
@@ -20,6 +19,13 @@ package a4;
 public interface Position {
 	int getX();
 	int getY();
-	int getManhattanDistanceTo(Position p);
+	
+	default int getManhattanDistanceTo(Position p) {
+		if (p.equals(null)) {
+			throw new RuntimeException("Attempted to get distance to null position");
+		}
+		
+		return Math.abs(p.getX() - getX()) + Math.abs(p.getY() - getY());
+	}
 	
 }

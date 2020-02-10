@@ -2,7 +2,7 @@ package a4;
 
 /*
  * RoundRobinDispatcher
- * A simple implementation of Dispatcher that chooses a driver based on index position
+ * An implementation of Dispatcher that chooses a driver based on index position
  * within the array. The index position used is simply one higher than the last index
  * position used, wrapping back around to 0 if necessary.
  */
@@ -19,6 +19,7 @@ public class RoundRobinDispatcher implements Dispatcher {
 	public Driver chooseDriver(Driver[] availableDrivers, RideRequest request) {
 		_last_idx = (_last_idx + 1) % availableDrivers.length;
 		return availableDrivers[_last_idx];
+		
 	}
 
 }

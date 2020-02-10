@@ -43,8 +43,20 @@ public interface CompletedRide {
 	RideRequest getRequest();
 	Driver getDriver();
 	int getWaitTime();
-	int getTotalTime();
-	double getCost();
-	double getPrice();
-	double getProfit();
+	
+	default int getTotalTime() {
+		return getRequest().getRideTime() + getWaitTime();
+	}
+	
+	default double getCost() {
+		return (double) getRequest().getRideTime() * 0.5 + (double) getWaitTime() * 0.1;
+	}
+	
+	default double getPrice() {		
+		return (double) getRequest().getRideTime() * ((getWaitTime() < 25) ? 2.5 : (getWaitTime() < 50) ? 2 : (getWaitTime() < 100) ? 1 : 0.5);
+	}
+	
+	default double getProfit() {
+		return getPrice() - getCost();
+	}
 }

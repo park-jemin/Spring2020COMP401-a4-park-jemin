@@ -41,6 +41,9 @@ public interface RideRequest {
 	Position getDestination();
 	boolean getIsComplete();
 	CompletedRide complete(Driver driver);
-	int getRideTime();
+
+	default int getRideTime() {
+		return getClientPosition().getManhattanDistanceTo(getDestination());
+	}
 
 }

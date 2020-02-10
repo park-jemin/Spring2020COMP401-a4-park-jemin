@@ -25,10 +25,20 @@ package a4;
  */
 
 public interface Driver {
+
 	String getFirstName();
 	String getLastName();
-	String getFullName();
 	int getID();
 	Vehicle getVehicle();
 	void setVehicle(Vehicle v);
+	
+	default String getFullName() {
+		return getFirstName() + " " + getLastName();
+	}
+	
+	default int distanceTo(RideRequest request) {
+		return getVehicle().getPosition().getManhattanDistanceTo(request.getClientPosition());
+	}
+	
+	
 }

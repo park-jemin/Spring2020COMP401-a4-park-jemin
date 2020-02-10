@@ -21,6 +21,5 @@ package a4;
  */
 
 public interface Dispatcher {
-
 	Driver chooseDriver(Driver[] availableDrivers, RideRequest request);
 }

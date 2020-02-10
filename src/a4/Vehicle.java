@@ -34,4 +34,5 @@ public interface Vehicle {
 	int getMileage();
 	Position getPosition();
 	void moveToPosition(Position p);
+	void moveToPosition(Position p, Position q);
 }
