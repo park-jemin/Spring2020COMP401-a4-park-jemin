@@ -17,17 +17,21 @@ public class ShortButFairDispatcher implements Dispatcher {
 	public ShortButFairDispatcher() {
 		chosen = new ArrayList<>();
 	}
-	
-	@Override
+
 	public Driver chooseDriver(Driver[] availableDrivers, RideRequest request) {
 		
-		Driver closestDriver = availableDrivers[3]; // this works w 3 and 6
-		
-		for (Driver driver : availableDrivers) {
-			closestDriver = (driver.distanceTo(request) <= closestDriver.distanceTo(request) 
-					&& !chosen.contains(driver)) ? driver : closestDriver;
+		Driver closestDriver = null;
+		for (Driver driver : availableDrivers) { // picks first driver not in chosen
+			if (!chosen.contains(driver)) {
+				closestDriver = driver;
+				break;
+			}
 		}
 		
+		for (Driver driver : availableDrivers) {
+			closestDriver = (closestDriver == null) || (driver.distanceTo(request) < closestDriver.distanceTo(request) 
+					&& !chosen.contains(driver)) ? driver : closestDriver;
+		}
 		
 		chosen.add(closestDriver);
 		if (chosen.size() > 5) {
