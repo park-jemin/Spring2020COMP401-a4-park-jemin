@@ -12,7 +12,6 @@ public class ShortestWaitDispatcher implements Dispatcher {
 		
 	}
 	
-	@Override
 	public Driver chooseDriver(Driver[] availableDrivers, RideRequest request) {
 		Driver closestDriver = availableDrivers[0];
 		for (Driver driver : availableDrivers) {

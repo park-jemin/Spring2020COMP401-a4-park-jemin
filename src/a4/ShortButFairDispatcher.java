@@ -29,7 +29,7 @@ public class ShortButFairDispatcher implements Dispatcher {
 		}
 		
 		for (Driver driver : availableDrivers) {
-			closestDriver = (closestDriver == null) || (driver.distanceTo(request) < closestDriver.distanceTo(request) 
+			closestDriver = (driver.distanceTo(request) < closestDriver.distanceTo(request) 
 					&& !chosen.contains(driver)) ? driver : closestDriver;
 		}
 		
