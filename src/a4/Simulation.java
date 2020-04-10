@@ -51,24 +51,35 @@ public class Simulation {
 		_rng = new Random(seed);
 		_dispatcher = dispatcher;
 
-		for (int i=0; i<_hotSpots.length; i++) {
+		for (int i=0; i<_hotSpots.length; i++) 
 			_hotSpots[i] = createRandomPosition();
-		}
 		
 		Driver[] drivers = new Driver[driver_count];
 		
-		for (int i=0; i<drivers.length; i++) {
+		
+		for (int i=0; i<drivers.length; i++)
 			drivers[i] = createRandomDriver(i);
-		}
+		
+		System.out.println();
+		System.out.println("Distances to (0,0)");
+		Position origin = new PositionImpl(0,0);
+		for (int i = 0; i < drivers.length; i++) 
+			System.out.println("Driver " + i + ": " + drivers[i].distanceTo(origin));
+		
+		System.out.println();
+		System.out.println("Distances to (25, 25)");
+		Position a = new PositionImpl(25,25);
+		for (int i = 0; i < drivers.length; i++) 
+			System.out.println("Driver " + i + ": " + drivers[i].distanceTo(a));
+		
+		
 
 		for (int r=0; r<request_count; r++) {
 			RideRequest request = createRandomRequest();
 			CompletedRide ride = request.complete(_dispatcher.chooseDriver(drivers, request));
 			_rideLog.add(ride);
 		}
-		
-		
-		
+			
 	}
 	
 	public Simulation(long seed, int request_count, Dispatcher dispatcher) {

@@ -37,8 +37,11 @@ public interface Driver {
 	}
 	
 	default int distanceTo(RideRequest request) {
-		return getVehicle().getPosition().getManhattanDistanceTo(request.getClientPosition());
+		return distanceTo(request.getClientPosition());
 	}
 	
+	default int distanceTo(Position position) {
+		return getVehicle().getPosition().getManhattanDistanceTo(position);
+	}
 	
 }

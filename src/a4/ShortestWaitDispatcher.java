@@ -1,5 +1,7 @@
 package a4;
 
+import java.util.*;
+
 /*
  * ShortestWaitDispatcher
  * An implementation of Dispatcher that chooses the first driver that is closest to the client's
@@ -8,16 +10,11 @@ package a4;
 
 public class ShortestWaitDispatcher implements Dispatcher {
 
-	public ShortestWaitDispatcher() {
-		
-	}
+	public ShortestWaitDispatcher() {}
 	
 	public Driver chooseDriver(Driver[] availableDrivers, RideRequest request) {
-		Driver closestDriver = availableDrivers[0];
-		for (Driver driver : availableDrivers) {
-			closestDriver = (driver.distanceTo(request) < closestDriver.distanceTo(request)) ? driver : closestDriver;
-		}
-		return closestDriver;
+		Arrays.sort(availableDrivers, Comparator.comparing((d) ->  d.distanceTo(request)));
+		return availableDrivers[0];
 	}
 
 }

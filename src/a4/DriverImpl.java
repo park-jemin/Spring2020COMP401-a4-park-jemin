@@ -4,7 +4,7 @@ public class DriverImpl implements Driver {
 
 	private String first, last;
 	private int id;
-	Vehicle vehicle;
+	private Vehicle vehicle;
 	
 	public DriverImpl(String first, String last, int id, Vehicle vehicle) {
 		if (first.equals(null) || last.equals(null) || vehicle.equals(null)) {

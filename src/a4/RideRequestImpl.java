@@ -3,9 +3,7 @@ package a4;
 public class RideRequestImpl implements RideRequest {
 
 	private Position clientPosition, destination;
-	private boolean isComplete = false;
-	private CompletedRide trip;
-	
+	private CompletedRide trip = null;
 	
 	public RideRequestImpl(Position clientPosition, Position destination) {
 		if (clientPosition.equals(null) || destination.equals(null)) {
@@ -24,18 +22,16 @@ public class RideRequestImpl implements RideRequest {
 	}
 	
 	public boolean getIsComplete() {
-		return isComplete;
+		return trip != null;
 	}
 	
-	public CompletedRide complete(Driver driver) {		
-		if (isComplete) {
-			return trip;
-		} else {			
-			isComplete = true;
+	public CompletedRide complete(Driver driver) {				
+		if (trip == null) {
 			trip = new CompletedRideImpl(this, driver);
 			driver.getVehicle().moveToPosition(clientPosition, destination);
-			return trip;
 		}
+		return trip;
+		
 	}
 
 

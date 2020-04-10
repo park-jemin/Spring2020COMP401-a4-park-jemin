@@ -12,34 +12,22 @@ import java.util.*;
 
 public class ShortButFairDispatcher implements Dispatcher {
 
-	private List<Driver> chosen;
+	private List<Driver> chosen = new ArrayList<>();
 	
-	public ShortButFairDispatcher() {
-		chosen = new ArrayList<>();
-	}
+	public ShortButFairDispatcher() {}
 
 	public Driver chooseDriver(Driver[] availableDrivers, RideRequest request) {
-		
-		Driver closestDriver = null;
-		for (Driver driver : availableDrivers) { // picks first driver not in chosen
+		Arrays.sort(availableDrivers, Comparator.comparing((d) -> d.distanceTo(request)));
+		for (Driver driver : availableDrivers) {
 			if (!chosen.contains(driver)) {
-				closestDriver = driver;
-				break;
+				chosen.add(driver);
+				if (chosen.size() > 5)
+					chosen.remove(0);
+				
+				return driver;
 			}
 		}
-		
-		for (Driver driver : availableDrivers) {
-			closestDriver = (driver.distanceTo(request) < closestDriver.distanceTo(request) 
-					&& !chosen.contains(driver)) ? driver : closestDriver;
-		}
-		
-		chosen.add(closestDriver);
-		if (chosen.size() > 5) {
-			chosen.remove(0);
-		}
-		
-		return closestDriver;		
-		
+		return null;		
 	}
 
 }
